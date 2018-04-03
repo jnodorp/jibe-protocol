@@ -1,0 +1,20 @@
+syntax = "proto3";
+package protocol;
+
+// The jibe service definition.
+service Jibe {
+    // Push an item to jibe for indexing.
+    rpc Index (IndexRequest) returns (IndexResponse) {
+    }
+}
+
+// A queue entry is written by a trigger and read by a worker.
+message IndexRequest {
+    string id = 1; // Some unique ID for the index request (e.g. the transaction ID + row)
+    string location = 2; // The location of the data to synchronize (e.g. the table name)
+    map<string, string> values = 3; // The values required to find the data (e.g. primary key values)
+}
+
+// Currently empty response. Might be extended in future.
+message IndexResponse {
+}
